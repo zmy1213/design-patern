@@ -1,0 +1,134 @@
+#include<iostream>
+#include<string>
+//功能的分离，客户端和服务端的分类 面向对象
+//计算器4
+using namespace std;
+
+//这是功能分离区，继承复用
+class OPeration
+{
+private:
+	double _numberB;
+	double _numberA;
+public:
+	double set_A(int value) { _numberA = value; return (_numberA); }
+	double set_B(int value) { _numberB = value; return (_numberB); }
+	double NumberA(int value=0)
+	{
+		if (value != 0)
+		{
+			set_A(value);
+		}
+		return _numberA;
+	}
+	double NumberB(int value=0)
+	{
+		if (value != 0)
+		{
+			set_B(value);
+		}
+		return _numberB;
+	}
+	virtual double GetResult()
+	{
+		double result = 0;
+		return result;
+	}
+};
+
+class OperationAdd:public OPeration
+{
+	virtual double GetResult() override
+	{
+		double result = 0;
+		
+		result = NumberA() + NumberB();
+		return result;
+	}
+};
+class OperationSub :public OPeration
+{
+	virtual double GetResult() override
+	{
+		double result = 0;
+		result = NumberA() - NumberB();
+		return result;
+	}
+};
+class OperationMul:public OPeration
+{
+	virtual double GetResult() override
+	{
+		double result = 0;
+		result = NumberA() * NumberB();
+		return result;
+	}
+};
+class OperationDiv :public OPeration
+{
+	virtual double GetResult() override
+	{
+		double result = 0;
+		result = NumberA() / NumberB();
+		return result;
+	}
+};
+
+class OperationFactory
+{
+public:
+	OPeration* operator()(string s)
+	{
+		return createOperate(s);
+	}
+private:
+	static OPeration* createOperate(string operate)
+	{
+		OPeration* oper = nullptr;
+		const char* c = operate.c_str();
+		char x = *c;
+		cout << (int)x << endl;
+		switch (x)
+		{
+			case int('+') :
+			{
+				oper = new OperationAdd;
+				break;
+			}
+			case int('-') :
+			{
+				oper = new OperationSub; 
+				break;
+			}
+			case int('*') :
+			{
+				oper = new OperationMul;
+				break;
+			}
+			case int('/') :
+			{
+				oper = new OperationDiv();
+				break;
+			}
+			default:
+			{
+			
+				
+				cout << "error input" << endl;
+			}
+		}
+		return oper;
+	}
+};
+int main()
+{
+	OPeration* oper;
+	string s = "/";
+	oper = OperationFactory()(s);
+
+	oper->set_A(1);
+	oper->set_B(2);
+	cout << oper->GetResult();
+
+	return 0;
+}
