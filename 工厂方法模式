@@ -1,0 +1,121 @@
+#include<iostream>
+#include<unordered_map>
+#include<string>
+using namespace std;
+class HashString
+{
+public:
+	size_t operator()(string s)
+	{
+		return hash<string>()(s);
+	}
+};
+class HashArray
+{
+private:
+	unordered_map<string, int> _data;
+public:
+	HashArray(string* ss,int size)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			_data.emplace(pair<string, int>(ss[i], HashString()(ss[i])));
+		}
+	}
+	size_t operator()(string x)
+	{
+		return _data[x];
+	}
+};
+class LeiFeng
+{
+public:
+	virtual void Sweep()
+	{
+		cout << "leifeng sweep" << endl;
+	}
+	virtual void Wash()
+	{
+		cout << "leifeng wash" << endl;
+	}
+	virtual void BuyRice()
+	{
+		cout << "leifeng BuyRice" << endl;
+	}
+};
+class Undergraduate:public LeiFeng
+{
+	void Sweep()
+	{
+		cout << "undergraduate sweep" << endl;
+	}
+	void Wash()
+	{
+		cout << "undergraduate wash" << endl;
+	}
+	void BuyRice()
+	{
+		cout << "undergraduate buyrice" << endl;
+	}
+};
+class Volunteer :public LeiFeng
+{
+};
+class IFactory
+{
+public:
+	/*static LeiFeng* CreateLeiFeng(string type)
+	{
+		LeiFeng* result = nullptr;
+		const char* c = type.c_str();
+		int i = (int)c;
+		switch (i)
+		{
+		case 18446744073573356890:
+		{
+			result = new LeiFeng;
+		    break;
+		}
+		case 18446744071952051074:
+		{
+			result = new Volunteer; 
+			break;
+		}
+		default:
+			break;
+		}
+		return result;
+	}*///simple factory
+	virtual LeiFeng* CreateLeiFeng() = 0;
+};
+class UndergraduateFactory :public IFactory
+{
+public:
+	LeiFeng* CreateLeiFeng()
+	{
+		return new Undergraduate;
+	}
+};
+class VolunteerFactory :public IFactory
+{
+public:
+	LeiFeng* CreateLeiFeng()
+	{
+		return new Volunteer;
+	}
+};
+int main()
+{
+	string ss[2] = { "学雷锋的大学生","社区志愿者"};
+	IFactory *factory = new UndergraduateFactory();
+	LeiFeng *student = factory->CreateLeiFeng();
+	student->BuyRice();
+	student->Sweep();
+	student->Wash();
+
+	IFactory* factory1 = new VolunteerFactory();
+	LeiFeng* leifeng = factory1->CreateLeiFeng();
+	leifeng->BuyRice();
+	leifeng->Sweep();
+	leifeng->Wash();
+}
