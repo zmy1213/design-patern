@@ -1,0 +1,66 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Person
+{
+public:
+	Person()
+	{}
+	Person(string name)
+	{
+		this->name = name;
+	}
+	virtual void Show()
+	{
+		cout << "装饰的" << name << endl;
+	}
+private:
+	string name;
+};
+class Finery:public Person
+{
+protected:
+	Person *component;
+public:
+	void Decorate(Person *component)
+	{
+		this->component = component;
+	}
+	void Show()override
+	{
+		if (component != nullptr)
+		{
+			component->Show();
+		}
+	}
+};
+class TShirts :public Finery
+{
+public:
+	void Show()override
+	{
+		cout << "TShirt" << endl;
+		Finery::Show();
+	}
+};
+class BigTrousers :public Finery
+{
+public:
+	void Show()override
+	{
+		cout << "BigTrousers" << endl;
+		Finery::Show();
+	}
+};
+using namespace std;
+int main()
+{
+	Person *xc = new Person("小菜");
+	TShirts* ts = new TShirts;
+	BigTrousers* bt = new BigTrousers;
+	ts->Decorate(xc);
+	bt->Decorate(ts);
+	bt->Show();
+	return 0;
+}
+//装饰模式是为已有功能动态的添加更多的功能的一种方式
