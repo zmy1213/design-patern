@@ -1,0 +1,97 @@
+#include<iostream>
+using namespace std;
+class SchoolGirl
+{
+private:
+	string name;
+public:
+	string Name(string name)
+	{
+		this->name = name;
+		return name;
+	}
+	string GetName()
+	{
+		return name;
+	}
+
+};
+struct GiveGift
+{
+	void GiveDolls()
+	{
+		cout << "dolls" << endl;
+	}
+	void GiveFlowers()
+	{
+		cout << "flowers" << endl;
+	}
+	void GiveChocolate()
+	{
+		cout << "chocclate" << endl;
+	}
+};
+class Persuit :public GiveGift
+{
+private:
+	SchoolGirl *mm;
+	string name;
+public:
+	Persuit(SchoolGirl *mm,string name)
+	{
+		this->mm = mm;
+		this->name = name;
+	}
+	void GiveDolls()
+	{
+		cout << name << " give "<<mm->GetName()<<" ";
+		GiveGift::GiveDolls();
+		cout << endl;
+	}
+	void GiveFlowers()
+	{
+		cout << name << " give " << mm->GetName() << " ";
+		GiveGift::GiveFlowers();
+		cout << endl;
+	}
+	void GiveChocolate()
+	{
+		cout << name << " give " << mm->GetName() << " ";
+		GiveGift::GiveChocolate();
+		cout << endl;
+	}
+};
+class Proxy :public GiveGift
+{
+private:
+	Persuit *gg;
+public:
+	Proxy(SchoolGirl *mm,string name )
+	{
+		gg = new Persuit(mm,name);
+	}
+	void GiveDolls()
+	{
+		gg->GiveChocolate();
+	}
+	void GiveFlowers()
+	{
+		gg->GiveFlowers();
+	}
+	void GiveChocolate()
+	{
+		gg->GiveChocolate();
+	}
+};
+int main()
+{
+	SchoolGirl* jiaojiao = new SchoolGirl;
+	jiaojiao->Name("娇娇");
+
+	Proxy* jiaping = new Proxy(jiaojiao,"戴笠");//戴笠是真实的追求者,贾平是代理
+	jiaping->GiveChocolate();
+	jiaping->GiveDolls();
+	jiaping->GiveFlowers();
+	return 0;
+}
+//为其他对象提供一种代理以控制对整个对象的访问
