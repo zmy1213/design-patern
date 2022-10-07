@@ -1,0 +1,105 @@
+//为子系统中的一组接口创建一致的界面，此模型定义了一组高层接口，这个接口使得这一子系统更加容易使用
+#include<iostream>
+#include<string>
+using namespace std;
+class Stock1
+{
+public:
+	void Sell()
+	{
+		cout << "股票1卖出" << endl;
+	}
+	void Buy()
+	{
+		cout << "股票1买入" << endl;
+	}
+};
+class Stock2
+{
+public:
+	void Sell()
+	{
+		cout << "股票2卖出" << endl;
+	}
+	void Buy()
+	{
+		cout << "股票2买入" << endl;
+	}
+};
+class Stock3
+{
+public:
+	void Sell()
+	{
+		cout << "股票3卖出" << endl;
+	}
+	void Buy()
+	{
+		cout << "股票3买入" << endl;
+	}
+};
+class NationDebt1
+{
+public:
+	void Sell()
+	{
+		cout << "国债1卖出" << endl;
+	}
+	void Buy()
+	{
+		cout << "国债1买入" << endl;
+	}
+};
+class Realty1
+{
+public:
+	void Sell()
+	{
+		cout << "房地产1卖出" << endl;
+	}
+	void Buy()
+	{
+		cout << "房地产1买入" << endl;
+	}
+};
+class Fund
+{
+private:
+	Stock1 *gu1;
+	Stock2 *gu2;
+	Stock3 *gu3;
+	NationDebt1 *nd1;
+	Realty1 *rt1;
+public:
+	Fund()
+	{
+		gu1 = new Stock1();
+		gu2 = new Stock2();
+		gu3 = new Stock3();
+		nd1 = new NationDebt1();
+		rt1 = new Realty1();
+	}
+	void BuyFund()
+	{
+		gu1->Buy();
+		gu2->Buy();
+		gu3->Buy();
+		nd1->Buy();
+		rt1->Buy();
+	}
+	void SellFund()
+	{
+		gu1->Sell();
+		gu2->Sell();
+		gu3->Sell();
+		nd1->Sell();
+		rt1->Sell();
+	}
+};
+int main()
+{
+	Fund* jingli = new Fund();
+	jingli->BuyFund();
+	jingli->SellFund();
+}
+//何时使用外观：设计初级阶段，应该有意识地将两个层分离，其次在开发阶段，子系统往往越来越复杂，增加facaade可以提供一个简单的接口，减少依赖
