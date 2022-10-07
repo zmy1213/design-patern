@@ -1,0 +1,70 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class WorkExperience
+{
+private:
+	string workData;
+	string company;
+public:
+	string re_wd() { return workData; };
+	string re_cp() { return company; };
+	void set_wd(string wd) { this->workData = wd; };
+	void set_cp(string cp) { this->company = cp; };
+};
+class Resume
+{
+private:
+	string name;
+	string sex;
+	string age;
+	WorkExperience work;
+public:
+	Resume() = default;
+	Resume(string name)
+	{
+		this->name = name;
+	}
+	void SetPersonnalInfo(string sex, string age)
+	{
+		this->sex = sex;
+		this->age = age;
+	}
+	void SetWorkExeperience(string data,string company)
+	{
+		work.set_cp(company);
+		work.set_wd(data);
+	}
+	void Display()
+	{
+		cout << "name,sex,age" << name << " " << sex << " " << age << " " << endl;
+		cout << "Exeperience work:" << work.re_wd() << " " << work.re_cp() << endl;
+	}
+	Resume* Clone()
+	{
+
+		Resume* r = new Resume;
+		r->age = this->age;
+		r->sex = this->sex;
+		r->name = this->name;
+		r->work = this->work;
+		return r;
+		//这是深复制
+	}
+};
+int main()
+{
+	Resume* a = new Resume("大鸟");
+	a->SetPersonnalInfo("男", "29");
+	a->SetWorkExeperience("1998-2000", "XX公司");
+
+	Resume* b = a->Clone();
+	b->SetWorkExeperience("1996-2006", "YY公司");
+
+	Resume* c = a->Clone();
+	c->SetWorkExeperience("1998-2003", "ZZ公司");
+	a->Display();
+	b->Display();
+	c->Display();
+	return 0;
+}
