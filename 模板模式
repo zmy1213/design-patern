@@ -1,0 +1,105 @@
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+class TestPaper
+{
+public:
+	void TestQuestion1()
+	{
+		cout << "问题1[]" << "a b c d" << endl;
+		cout << "answer:" << Answer1() << endl;
+	}
+	void TestQuestion2()
+	{
+		cout << "问题2[]" << "a b c d" << endl;
+		cout << "answer:" << Answer2() << endl;
+	}
+	void TestQuestion3()
+	{
+		cout << "问题3[]" << "a b c d" << endl;
+		cout << "answer:" << Answer3() << endl;
+	}
+	virtual string Answer1()
+	{
+		return "";
+	}
+	virtual string Answer2()
+	{
+		return "";
+	}
+	virtual string Answer3()
+	{
+		return "";
+	}
+
+};
+class TestPaperA :public TestPaper
+{
+private:
+	string answers[3];
+public:
+	TestPaperA() = default;
+	TestPaperA(const vector<string> &as)
+	{
+		int index = 0;
+		for (const auto a : as)
+		{
+			answers[index++] = a;
+		}
+	}
+	string Answer1()override
+	{
+		return answers[0];
+	}
+	string Answer2()override
+	{
+		return answers[1];
+	}
+	string Answer3()override
+	{
+		return answers[2];
+	}
+};
+class TestPaperB :public TestPaper
+{
+private:
+	string answers[3];
+public:
+	TestPaperB() = default;
+	TestPaperB(const vector<string> &as)
+	{
+		int index = 0;
+		for (const auto a : as)
+		{
+			answers[index++] = a;
+		}
+	}
+	string Answer1()override
+	{
+		return answers[0];
+	}
+	string Answer2()override
+	{
+		return answers[1];
+	}
+	string Answer3()override
+	{
+		return answers[2];
+	}
+};
+int main()
+{
+	cout << "student A:" << endl;
+	vector<string> sa = { "a","b","c" };
+	TestPaperA* studentA = new TestPaperA(sa);
+	studentA->TestQuestion1();
+	studentA->TestQuestion2();
+	studentA->TestQuestion3();
+	vector<string> sb = { "a","c","c" };
+	cout << "student B:" << endl;
+	TestPaperB* studentB = new TestPaperB(sb);
+	studentB->TestQuestion1();
+	studentB->TestQuestion2();
+	studentB->TestQuestion3();
+}
